@@ -1,4 +1,5 @@
 import { PostCard } from '@/components/post-card'
+import { PostGridCard } from '@/components/post-grid-card'
 import { Search } from '@/components/search'
 import { useRouter } from 'next/router'
 
@@ -11,7 +12,7 @@ export function BlogList() {
 
   return (
     <div className="flex flex-col py-24 flex-grow h-full">
-      <header className="">
+      <header className="pb-14">
         <div className="container space-y-6 flex flex-col items-start justify-between md:flex-row md:items-end lg:items-end">
           <div className="flex flex-col gap-4 md:px-0">
             {/* TAG */}
@@ -29,8 +30,19 @@ export function BlogList() {
         </div>
       </header>
 
-      {/* Listagem de posts */}
-      <PostCard />
+      <PostGridCard>
+        <PostCard
+          title="Transformando seu negócio em uma loja virtual"
+          description="Se você está buscando uma maneira simples e eficaz de vender seus produtos online..."
+          date="20/12/2024"
+          slug="transformando"
+          image="/assets/primeiro-post.png"
+          author={{
+            avatar: '/customer-01.png',
+            name: 'Aspen Dokidis',
+          }}
+        />
+      </PostGridCard>
     </div>
   )
 }
