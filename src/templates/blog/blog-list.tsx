@@ -1,4 +1,4 @@
-import { PostCard } from '@/components/post-card'
+import { PostCard } from '@/templates/blog/components/post-card'
 import { PostGridCard } from '@/components/post-grid-card'
 import { Search } from '@/components/search'
 import { useRouter } from 'next/router'
