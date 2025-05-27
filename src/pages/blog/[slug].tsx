@@ -12,13 +12,27 @@ import {
 } from '@/components/ui/breadcrumb'
 import { Avatar } from '@/components/avatar'
 import { Markdown } from '@/components/markdown'
+import { Button } from '@/components/ui/button'
+import { useShare } from '@/hooks'
 
 export default function PostPage() {
   const router = useRouter()
   const slug = router.query.slug as string
+
   const post = allPosts.find(
-    (post) => post.slug.toLowerCase() === slug.toLowerCase()
+    (post) => post.slug.toLowerCase() === slug?.toLowerCase()
   )!
+
+  const postUrl = 'https://site.set/blog' + post?.slug
+
+  const { shareButtons } = useShare({
+    url: postUrl,
+    title: post?.title,
+    text: post?.description,
+  })
+
+  if (!slug) return
+
   const publishedDate = new Date(post?.date).toLocaleDateString('pt-BR')
 
   return (
@@ -66,18 +80,31 @@ export default function PostPage() {
                   <Avatar.Title>{post?.author.name}</Avatar.Title>
                   <Avatar.Description>
                     Publicado em {''}
-                    <time dateTime={post.date}>{publishedDate}</time>
+                    <time dateTime={post?.date}>{publishedDate}</time>
                   </Avatar.Description>
                 </Avatar.Content>
               </Avatar.Container>
             </header>
 
             <div className="prose prose-invert max-w-none px-4 mt-12 md:px-6 lg:px-12">
-              <Markdown content={post.body.raw} />
+              <Markdown content={post?.body.raw} />
             </div>
           </article>
+          <aside className="space-y-3">
+            {shareButtons.map((provider) => (
+              <Button
+                key={provider.provider}
+                variant="outline"
+                onClick={provider.action}
+                className="w-full justify-start gap-2"
+              >
+                {provider.icon}
+                {provider.name}
+              </Button>
+            ))}
+          </aside>
         </div>
-      </div>{' '}
+      </div>
     </main>
   )
 }
