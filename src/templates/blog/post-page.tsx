@@ -1,8 +1,10 @@
-import { useRouter } from 'next/router'
+import { allPosts } from 'contentlayer/generated'
 import Image from 'next/image'
 import Link from 'next/link'
-import { allPosts } from 'contentlayer/generated'
+import { useRouter } from 'next/router'
 
+import { Avatar } from '@/components/avatar'
+import { Markdown } from '@/components/markdown'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -10,20 +12,17 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
-import { Avatar } from '@/components/avatar'
-import { Markdown } from '@/components/markdown'
 import { Button } from '@/components/ui/button'
 import { useShare } from '@/hooks'
 
-export function PostPage() {
+export const PostPage = () => {
   const router = useRouter()
   const slug = router.query.slug as string
-
   const post = allPosts.find(
-    (post) => post.slug.toLowerCase() === slug?.toLowerCase()
+    (post) => post?.slug?.toLowerCase() === slug?.toLowerCase()
   )!
-
-  const postUrl = 'https://site.set/blog' + post?.slug
+  const publishedDate = new Date(post?.date).toLocaleDateString('pt-BR')
+  const postUrl = `https://site.set/blog/${slug}`
 
   const { shareButtons } = useShare({
     url: postUrl,
@@ -31,13 +30,9 @@ export function PostPage() {
     text: post?.description,
   })
 
-  if (!slug) return
-
-  const publishedDate = new Date(post?.date).toLocaleDateString('pt-BR')
-
   return (
-    <main className="mt-32 text-gray-100">
-      <div className="container space-y-12 px-4 md:px-8">
+    <main className="py-20 text-gray-100">
+      <div className="container space-y-8 px-4 md:px-8">
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
@@ -54,7 +49,7 @@ export function PostPage() {
           </BreadcrumbList>
         </Breadcrumb>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-6 lg:gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-6 lg:gap-8">
           <article className="bg-gray-600 rounded-lg overflow-hidden border-gray-400 border-[1px]">
             <figure className="relative aspect-[16/10] w-full overflow-hidden rounded-lg">
               <Image
@@ -90,22 +85,26 @@ export function PostPage() {
               <Markdown content={post?.body.raw} />
             </div>
           </article>
-          <aside>
-            <div className="rounded-lg bg-gray-700 space-y-3">
-              <h2 className="mb-4 text-heading-xs text-gray-100">
+
+          <aside className="space-y-6">
+            <div className="rounded-lg bg-gray-700">
+              <h2 className="hidden md:block mb-4 text-heading-xs text-gray-100">
                 Compartilhar
               </h2>
-              {shareButtons.map((provider) => (
-                <Button
-                  key={provider.provider}
-                  variant="outline"
-                  onClick={provider.action}
-                  className="w-full justify-start gap-2"
-                >
-                  {provider.icon}
-                  {provider.name}
-                </Button>
-              ))}
+
+              <div className="flex md:flex-col gap-2 flex-wrap">
+                {shareButtons.map((provider) => (
+                  <Button
+                    key={provider.provider}
+                    onClick={() => provider.action()}
+                    variant="outline"
+                    className="w-fit md:w-full justify-start gap-2"
+                  >
+                    {provider.icon}
+                    <span className="hidden md:block">{provider.name}</span>
+                  </Button>
+                ))}
+              </div>
             </div>
           </aside>
         </div>
