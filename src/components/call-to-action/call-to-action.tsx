@@ -4,10 +4,10 @@ import { Button } from '../ui/button'
 
 export const CallToAction = () => {
   return (
-    <section className="py-24 bg-gradient-to-b from-cyan-950/20 to-gray-700">
+    <section className="mt-8 py-24 bg-gradient-to-b from-cyan-950/20 to-gray-700 relative">
       <div className="container">
-        <div className="flex flex-col items-center gap-6 text-center">
-          <div className="p-4 bg-cyan-300 w-fit rounded-full">
+        <div className="flex flex-col items-center gap-6 text-center ">
+          <div className="p-4 bg-cyan-300 w-fit rounded-full absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
             <Store className="text-cyan-100" />
           </div>
 

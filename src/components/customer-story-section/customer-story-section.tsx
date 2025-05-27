@@ -44,7 +44,8 @@ export const CustomerStorySection = () => {
                   <Image
                     src={customerStory.author.avatar}
                     alt={customerStory.author.name}
-                    fill
+                    width={40}
+                    height={40}
                     className="object-cover"
                   />
                 </div>
