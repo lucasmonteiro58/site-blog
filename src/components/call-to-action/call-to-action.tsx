@@ -4,7 +4,7 @@ import { Button } from '../ui/button'
 
 export const CallToAction = () => {
   return (
-    <section className="relative py-24 bg-gradient-to-b from-cyan-950/20 to-gray-700">
+    <section className="relative py-24 bg-gradient-to-b from-cyan-950/20 to-gray-700 mt-8">
       <div className="absolute inset-0 bg-[url('/background-footer.svg')] bg-cover bg-center bg-no-repeat opacity-90" />
       <div className="p-4 bg-cyan-300 w-fit rounded-full absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
         <Store className="text-cyan-100" />
