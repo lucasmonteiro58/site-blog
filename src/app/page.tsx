@@ -3,6 +3,7 @@ import { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Site.Set',
+  keywords: ['site.set', 'venda', 'produtos', 'afiliado', 'negócio'],
   description: 'Venda seus produtos como afiliado em um único lugar',
   robots: 'index, follow',
   openGraph: {
